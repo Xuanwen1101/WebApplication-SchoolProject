@@ -1,0 +1,24 @@
+﻿
+@model IEnumerable<SchoolProject_W2022.Models.Teacher>
+@{
+    ViewBag.Title = "List";
+}
+
+<h3>This page should be showing a name list for all the Teachers.</h3>
+
+<div>There are @Model.Count() teachers in the system.</div>
+
+<div id="containerlist">
+    <h2>List of Teachers</h2>
+    @{
+        foreach (SchoolProject_W2022.Models.Teacher teacher in Model)
+        {
+            <div class="listitem row">
+                <div class="col-md-12">
+                    <a href="/Teacher/Show/@teacher.TeacherId">@teacher.TeacherFName @teacher.TeacherLName</a>
+                </div>
+            </div>
+        }
+    }
+
+</div>

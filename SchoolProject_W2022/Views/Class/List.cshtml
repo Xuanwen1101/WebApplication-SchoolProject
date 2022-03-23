@@ -1,0 +1,24 @@
+﻿
+@model IEnumerable<SchoolProject_W2022.Models.Class>
+@{
+    ViewBag.Title = "List";
+}
+
+<h3>This page should be showing a name list for all the Classes.</h3>
+
+<div>There are @Model.Count() classes in the system.</div>
+
+<div id="containerlist">
+    <h2>List of Classes</h2>
+    @{
+        foreach (SchoolProject_W2022.Models.Class currentClass in Model)
+        {
+            <div class="listitem row">
+                <div class="col-md-12">
+                    <a href="/Class/Show/@currentClass.ClassId">@currentClass.ClassName</a>
+                </div>
+            </div>
+        }
+    }
+
+</div>
