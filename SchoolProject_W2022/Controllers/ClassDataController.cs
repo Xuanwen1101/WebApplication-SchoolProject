@@ -61,7 +61,7 @@ namespace SchoolProject_W2022.Controllers
         }
 
         /// <summary>
-        /// Return the information list of the selected Class name
+        /// Return the information list of the selected Class
         /// </summary>
         /// <param name="classId">The selected class's Id number</param>
         /// <returns>A list of the selected Class information (including class names, class code, class id, teacher name, startdate, and finishdate.)</returns>
@@ -76,7 +76,12 @@ namespace SchoolProject_W2022.Controllers
 
             MySqlCommand cmd = Conn.CreateCommand();
 
-            cmd.CommandText = "SELECT CONCAT(teacherfname, ' ', teacherlname) AS 'teachername', classes.* FROM classes JOIN teachers ON classes.teacherid = teachers.teacherid WHERE classId=" + classId;
+            // cmd.CommandText = "SELECT CONCAT(teacherfname, ' ', teacherlname) AS 'teachername', classes.* FROM classes JOIN teachers ON classes.teacherid = teachers.teacherid WHERE classId=" + classId;
+            // parameterize the queries to avoid sql injection attacks
+            cmd.CommandText = "SELECT CONCAT(teacherfname, ' ', teacherlname) AS 'teachername', classes.* FROM classes JOIN teachers ON classes.teacherid = teachers.teacherid WHERE classId = @id";
+            cmd.Parameters.AddWithValue("@id", classId);
+            cmd.Prepare();
+
 
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 

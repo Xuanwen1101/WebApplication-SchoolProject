@@ -61,7 +61,7 @@ namespace SchoolProject_W2022.Controllers
         }
 
         /// <summary>
-        /// Return the information list of the selected Teacher name
+        /// Return the information list of the selected Teacher
         /// </summary>
         /// <param name="teacherId">The selected teacher's Id number</param>
         /// <returns>A list of the selected Teacher information (including first names, last names, id, employee number, hire date, and salary.)</returns>
@@ -76,7 +76,11 @@ namespace SchoolProject_W2022.Controllers
 
             MySqlCommand cmd = Conn.CreateCommand();
 
-            cmd.CommandText = "SELECT * FROM Teachers where teacherId=" + teacherId;
+            // cmd.CommandText = "SELECT * FROM Teachers where teacherId=" + teacherId;
+            // parameterize the queries to avoid sql injection attacks
+            cmd.CommandText = "SELECT * FROM Teachers where teacherId = @id";
+            cmd.Parameters.AddWithValue("@id", teacherId);
+            cmd.Prepare();
 
             MySqlDataReader ResultSet = cmd.ExecuteReader();
 
