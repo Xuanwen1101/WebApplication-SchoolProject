@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -101,6 +102,77 @@ namespace SchoolProject_W2022.Controllers
             // Return the information list of the selected Teacher
             return SelectedTeacher;
         }
+
+
+        /// <summary>
+        /// Add a new Teacher into the system with the given information.
+        /// </summary>
+        /// <param name="NewTeacher"> The Teacher information that we will add to the DB</param>
+        /// <example>
+        /// POST api/TeacherData/AddTeacher 
+        /// FORM DATA / POST DATA / REQUEST BODY 
+        /// {
+        ///	    "TeacherFname":"Test",
+        ///	    "TeacherLname":"Teacher",
+        ///	    "EmployeeNumber":"T366",
+        ///	    "TeacherSalary":"52.11"
+        /// }
+        /// </example>
+        [HttpPost]
+        public void addTeacher([FromBody] Teacher NewTeacher)
+        {
+            //Create an instance of a connection
+            MySqlConnection Conn = School.AccessDatabase();
+
+            Debug.WriteLine(NewTeacher.TeacherFName);
+
+            //Open the connection between the web server and database
+            Conn.Open();
+
+            //Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            //SQL QUERY
+            cmd.CommandText = "insert into teachers (teacherfname, teacherlname, employeenumber, hiredate, salary) values (@TeacherFname,@TeacherLname,@EmployeeNumber, CURRENT_DATE(), @TeacherSalary)";
+            cmd.Parameters.AddWithValue("@TeacherFname", NewTeacher.TeacherFName);
+            cmd.Parameters.AddWithValue("@TeacherLname", NewTeacher.TeacherLName);
+            cmd.Parameters.AddWithValue("@EmployeeNumber", NewTeacher.EmployeeNumber);
+            cmd.Parameters.AddWithValue("@TeacherSalary", NewTeacher.Salary);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+        }
+
+        /// <summary>
+        /// Delete the selected Teacher from the system.
+        /// </summary>
+        /// <param name="id">The primary key: TeacherId</param>
+        /// <example>POST : /api/TeacherData/DeleteTeacher/3</example>
+        [HttpPost]
+        public void deleteTeacher(int id)
+        {
+            //Create an instance of a connection
+            MySqlConnection Conn = School.AccessDatabase();
+
+            //Open the connection between the web server and database
+            Conn.Open();
+
+            //Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            //SQL QUERY
+            cmd.CommandText = "Delete from teachers where teacherid=@id";
+            cmd.Parameters.AddWithValue("@id", id);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+
+        }
+
 
     }
 
