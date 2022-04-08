@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Web.Http;
 using SchoolProject_W2022.Models;
 using MySql.Data.MySqlClient;
+using System.Web.Http.Cors;
 
 namespace SchoolProject_W2022.Controllers
 {
@@ -112,13 +113,14 @@ namespace SchoolProject_W2022.Controllers
         /// POST api/TeacherData/AddTeacher 
         /// FORM DATA / POST DATA / REQUEST BODY 
         /// {
-        ///	    "TeacherFname":"Test",
-        ///	    "TeacherLname":"Teacher",
+        ///	    "TeacherFName":"Test",
+        ///	    "TeacherLName":"Teacher",
         ///	    "EmployeeNumber":"T366",
-        ///	    "TeacherSalary":"52.11"
+        ///	    "Salary":"52.11"
         /// }
         /// </example>
         [HttpPost]
+        [EnableCors(origins: "*", methods: "*", headers: "*")]
         public void addTeacher([FromBody] Teacher NewTeacher)
         {
             //Create an instance of a connection

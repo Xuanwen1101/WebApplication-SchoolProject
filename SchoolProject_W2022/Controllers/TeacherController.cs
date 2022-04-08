@@ -91,5 +91,12 @@ namespace SchoolProject_W2022.Controllers
             return RedirectToAction("List");
         }
 
+        //GET : /Teacher/Ajax_New
+        public ActionResult Ajax_New()
+        {
+            return View();
+
+        }
+
     }
 }
