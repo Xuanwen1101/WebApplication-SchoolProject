@@ -18,12 +18,12 @@
 	var EmployeeNumber = document.getElementById('EmployeeNumber').value;
 	var TeacherSalary = document.getElementById('TeacherSalary').value;
 
-	//var TeacherData = {
-	//	"TeacherFName": TeacherFname,
-	//	"TeacherLName": TeacherLname,
-	//	"EmployeeNumber": EmployeeNumber,
-	//	"Salary": TeacherSalary
-	//};
+	/*var TeacherData = {
+		"teacherfname": TeacherFname,
+		"teacherlname": TeacherLname,
+		"employeenumber": EmployeeNumber,
+		"salary": parseFloat(TeacherSalary).toFixed(2)
+	};*/
 
 
 	var TeacherData = {
