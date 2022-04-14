@@ -120,6 +120,7 @@ namespace SchoolProject_W2022.Controllers
         /// }
         /// </example>
         [HttpPost]
+        [Route("api/TeacherData/addTeacher")]
         [EnableCors(origins: "*", methods: "*", headers: "*")]
         public void addTeacher([FromBody] Teacher NewTeacher)
         {
@@ -127,6 +128,7 @@ namespace SchoolProject_W2022.Controllers
             MySqlConnection Conn = School.AccessDatabase();
 
             Debug.WriteLine(NewTeacher.TeacherFName);
+            Debug.WriteLine(NewTeacher.SalaryString);
 
             //Open the connection between the web server and database
             Conn.Open();
@@ -139,7 +141,7 @@ namespace SchoolProject_W2022.Controllers
             cmd.Parameters.AddWithValue("@TeacherFname", NewTeacher.TeacherFName);
             cmd.Parameters.AddWithValue("@TeacherLname", NewTeacher.TeacherLName);
             cmd.Parameters.AddWithValue("@EmployeeNumber", NewTeacher.EmployeeNumber);
-            cmd.Parameters.AddWithValue("@TeacherSalary", NewTeacher.Salary);
+            cmd.Parameters.AddWithValue("@TeacherSalary", Convert.ToDouble(NewTeacher.SalaryString));
             cmd.Prepare();
 
             cmd.ExecuteNonQuery();
@@ -148,7 +150,7 @@ namespace SchoolProject_W2022.Controllers
         }
 
         /// <summary>
-        /// Delete the selected Teacher from the system.
+        /// Delete the selected Teacher and the classes pointing to this teacher from the system.
         /// </summary>
         /// <param name="id">The primary key: TeacherId</param>
         /// <example>POST : /api/TeacherData/DeleteTeacher/3</example>
@@ -161,15 +163,25 @@ namespace SchoolProject_W2022.Controllers
             //Open the connection between the web server and database
             Conn.Open();
 
-            //Establish a new command (query) for our database
+            //Establish a new command (query) for deleting the classes pointing to the selected Teacher from the classes table.
             MySqlCommand cmd = Conn.CreateCommand();
 
             //SQL QUERY
-            cmd.CommandText = "Delete from teachers where teacherid=@id";
+            cmd.CommandText = "Delete from classes where teacherid=@id";
             cmd.Parameters.AddWithValue("@id", id);
             cmd.Prepare();
 
             cmd.ExecuteNonQuery();
+
+            //Establish a new command (query) for deleting the selected Teacher from the teachers table.
+            MySqlCommand cmd_2 = Conn.CreateCommand();
+
+            //SQL QUERY
+            cmd_2.CommandText = "Delete from teachers where teacherid=@id";
+            cmd_2.Parameters.AddWithValue("@id", id);
+            cmd_2.Prepare();
+
+            cmd_2.ExecuteNonQuery();
 
             Conn.Close();
 

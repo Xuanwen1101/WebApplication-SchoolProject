@@ -1,12 +1,9 @@
 ﻿function addTeacher() {
 
-	//goal: send a request which looks like this:
-	//POST : http://localhost:56815/Teacher/Create/
-	//with POST data of teacherfname, teacherlname, employeenumber, hiredate, and salary.
+	//goal: send a request with POST data of teacherfname, teacherlname, employeenumber, hiredate, and salary.
+	//POST : http://localhost:56815/api/TeacherData/addTeacher
 
-	//var URL = "http://localhost:56815/api/TeacherData/addTeacher/";
-
-	var URL = "http://localhost:56815/Teacher/Create/";
+	var URL = "http://localhost:56815/api/TeacherData/addTeacher/";
 
 	var rq = new XMLHttpRequest();
 	// where is this request sent to?
@@ -18,19 +15,19 @@
 	var EmployeeNumber = document.getElementById('EmployeeNumber').value;
 	var TeacherSalary = document.getElementById('TeacherSalary').value;
 
+
 	/*var TeacherData = {
-		"teacherfname": TeacherFname,
-		"teacherlname": TeacherLname,
-		"employeenumber": EmployeeNumber,
-		"salary": parseFloat(TeacherSalary).toFixed(2)
-	};*/
-
-
-	var TeacherData = {
 		"TeacherFname": TeacherFname,
 		"TeacherLname": TeacherLname,
 		"EmployeeNumber": EmployeeNumber,
 		"TeacherSalary": TeacherSalary
+	};*/
+
+	var TeacherData = {
+		"TeacherFName": TeacherFname,
+		"TeacherLName": TeacherLname,
+		"EmployeeNumber": EmployeeNumber,
+		"SalaryString": TeacherSalary
 	};
 
 	console.log(JSON.stringify(TeacherData));
@@ -41,7 +38,6 @@
 		//ready state should be 4 AND status should be 200
 		if (rq.readyState == 4 && rq.status == 200) {
 			//request is successful and the request is finished
-			//nothing to render, the method returns nothing.
 
 			//console.log(JSON.stringify(TeacherData));
 		}

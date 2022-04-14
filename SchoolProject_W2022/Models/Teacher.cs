@@ -13,5 +13,7 @@ namespace SchoolProject_W2022.Models
         public string EmployeeNumber { get; set; }
         public DateTime HireDate { get; set; }
         public double Salary { get; set; }
+
+        public string SalaryString { get; set; }
     }
 }

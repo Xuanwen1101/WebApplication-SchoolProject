@@ -57,13 +57,14 @@ namespace SchoolProject_W2022.Controllers
 
             Debug.WriteLine("I have accessed the Create Method!");
             Debug.WriteLine(TeacherFname);
-            Debug.WriteLine(TeacherLname);
+            Debug.WriteLine(TeacherSalary);
 
             Teacher NewTeacher = new Teacher();
             NewTeacher.TeacherFName = TeacherFname;
             NewTeacher.TeacherLName = TeacherLname;
             NewTeacher.EmployeeNumber = EmployeeNumber;
-            NewTeacher.Salary = Convert.ToDouble(TeacherSalary);
+            /*NewTeacher.Salary = Convert.ToDouble(TeacherSalary);*/
+            NewTeacher.SalaryString = TeacherSalary;
 
             TeacherDataController controller = new TeacherDataController();
             controller.addTeacher(NewTeacher);
