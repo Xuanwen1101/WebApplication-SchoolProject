@@ -4,7 +4,7 @@
 }
 
 <h2>New Teacher</h2>
-<form method="POST" action="/Teacher/Create" name="teacherForm">
+<form method="POST" action="/Teacher/Create" onsubmit="return validateTeacher();" name="teacherForm">
     <div>
         <label for="TeacherFname">First Name:</label>
         <input type="text" id="TeacherFname" name="TeacherFname" required="required" />
@@ -26,5 +26,6 @@
     <div>
         <input type="submit" value="Add Teacher" />
     </div>
+    <div id="ErrorBox" style="display:none;"></div>
 </form>
 
