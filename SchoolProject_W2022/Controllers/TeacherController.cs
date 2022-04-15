@@ -99,5 +99,58 @@ namespace SchoolProject_W2022.Controllers
 
         }
 
+
+        /// <summary>
+        ///     Routes to a dynamically generated "Teacher Update" Page.
+        /// </summary>
+        /// <param name="id">Id of the Teacher</param>
+        /// <returns>A dynamic "Update Teacher" webpage which provides the current information of the Teacher and asks the user for new information as part of a form.</returns>
+        /// <example>
+        ///     GET : /Teacher/Update/5
+        /// </example>
+        public ActionResult Update(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            Teacher SelectedTeacher = controller.getTeacher(id);
+
+            return View(SelectedTeacher);
+        }
+
+
+        /// <summary>
+        ///     Receives a POST request containing information about an existing Teacher in the system, with new values.
+        /// </summary>
+        /// <param name="id">Id of the Teacher to update</param>
+        /// <param name="TeacherFname">The updated first name of the Teacher</param>
+        /// <param name="TeacherLname">The updated last name of the Teacher</param>
+        /// <param name="EmployeeNumber">The updated employee number of the Teacher.</param>
+        /// <param name="TeacherSalary">The updated salary of the Teacher.</param>
+        /// <returns>A dynamic webpage which provides the current information of the Teacher.</returns>
+        /// <example>
+        ///     POST : /Teacher/Update/10
+        ///     FORM DATA / POST DATA / REQUEST BODY 
+        ///     {
+        ///	        "TeacherFName":"Test",
+        ///	        "TeacherLName":"Teacher",
+        ///	        "EmployeeNumber":"T366",
+        ///	        "Salary":"52.11"
+        ///     }
+        /// </example>
+        [HttpPost]
+        public ActionResult Edit(int id, string TeacherFname, string TeacherLname, string EmployeeNumber, string TeacherSalary)
+        {
+            Teacher TeacherInfo = new Teacher();
+            TeacherInfo.TeacherFName = TeacherFname;
+            TeacherInfo.TeacherLName = TeacherLname;
+            TeacherInfo.EmployeeNumber = EmployeeNumber;
+            TeacherInfo.SalaryString = TeacherSalary;
+
+            TeacherDataController controller = new TeacherDataController();
+            controller.updateTeacher(id, TeacherInfo);
+
+            return RedirectToAction("Show/" + id);
+        }
+
+
     }
 }

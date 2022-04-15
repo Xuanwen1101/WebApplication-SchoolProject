@@ -188,6 +188,51 @@ namespace SchoolProject_W2022.Controllers
         }
 
 
+        /// <summary>
+        /// Updates an Teacher on the MySQL Database. Non-Deterministic.
+        /// </summary>
+        /// <param name="id">The primary key: TeacherId</param>
+        /// <param name="TeacherInfo">An object with fields that map to the columns of the Teacher's table.</param>
+        /// <example>
+        /// POST api/TeacherData/UpdateTeacher/22 
+        /// FORM DATA / POST DATA / REQUEST BODY 
+        /// {
+        ///	    "TeacherFName":"Test",
+        ///	    "TeacherLName":"Teacher",
+        ///	    "EmployeeNumber":"T366",
+        ///	    "Salary":"52.11"
+        /// }
+        /// </example>
+        public void updateTeacher(int id, [FromBody]Teacher TeacherInfo)
+        {
+            //Create an instance of a connection
+            MySqlConnection Conn = School.AccessDatabase();
+
+            Debug.WriteLine(TeacherInfo.TeacherFName);
+
+            //Open the connection between the web server and database
+            Conn.Open();
+
+            //Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            //SQL QUERY
+            cmd.CommandText = "update teachers set teacherfname=@TeacherFname, teacherlname=@TeacherLname, employeenumber=@EmployeeNumber, salary=@TeacherSalary where teacherid=@TeacherId";
+            cmd.Parameters.AddWithValue("@TeacherFname", TeacherInfo.TeacherFName);
+            cmd.Parameters.AddWithValue("@TeacherLname", TeacherInfo.TeacherLName);
+            cmd.Parameters.AddWithValue("@EmployeeNumber", TeacherInfo.EmployeeNumber);
+            cmd.Parameters.AddWithValue("@TeacherSalary", Convert.ToDouble(TeacherInfo.SalaryString));
+            cmd.Parameters.AddWithValue("@TeacherId", id);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+
+
+        }
+
+
     }
 
 }
