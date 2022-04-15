@@ -151,6 +151,14 @@ namespace SchoolProject_W2022.Controllers
             return RedirectToAction("Show/" + id);
         }
 
+        public ActionResult Ajax_Update(int id)
+        {
+            TeacherDataController controller = new TeacherDataController();
+            Teacher SelectedTeacher = controller.getTeacher(id);
+
+            return View(SelectedTeacher);
+        }
+
 
     }
 }

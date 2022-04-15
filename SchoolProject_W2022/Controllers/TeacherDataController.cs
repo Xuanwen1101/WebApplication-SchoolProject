@@ -27,6 +27,7 @@ namespace SchoolProject_W2022.Controllers
         /// </returns>
         [HttpGet]
         [Route("api/TeacherData/ListTeachers")]
+        [EnableCors(origins: "*", methods: "*", headers: "*")]
         public IEnumerable<Teacher> ListTeachers()
         {
             //Create an instance of a connection
@@ -70,6 +71,7 @@ namespace SchoolProject_W2022.Controllers
         /// <example>GET api/TeacherData/getTeacher/1</example>
         [HttpGet]
         [Route("api/TeacherData/getTeacher/{teacherId}")]
+        [EnableCors(origins: "*", methods: "*", headers: "*")]
         public Teacher getTeacher(int teacherId)
         {
             MySqlConnection Conn = School.AccessDatabase();
@@ -155,6 +157,8 @@ namespace SchoolProject_W2022.Controllers
         /// <param name="id">The primary key: TeacherId</param>
         /// <example>POST : /api/TeacherData/DeleteTeacher/3</example>
         [HttpPost]
+        [Route("api/TeacherData/deleteTeacher/{id}")]
+        [EnableCors(origins: "*", methods: "*", headers: "*")]
         public void deleteTeacher(int id)
         {
             //Create an instance of a connection
@@ -203,6 +207,9 @@ namespace SchoolProject_W2022.Controllers
         ///	    "Salary":"52.11"
         /// }
         /// </example>
+        [HttpPost]
+        [Route("api/TeacherData/updateTeacher/{id}")]
+        [EnableCors(origins: "*", methods: "*", headers: "*")]
         public void updateTeacher(int id, [FromBody]Teacher TeacherInfo)
         {
             //Create an instance of a connection

@@ -1,13 +1,17 @@
 ﻿@model SchoolProject_W2022.Models.Teacher
 @{
-    ViewBag.Title = "Update";
+    ViewBag.Title = "Ajax_Update";
 }
 
-<div>
-    <a class="navlink" href="/Teacher/Show/@Model.TeacherId">Back to The Teacher</a>
-</div>
-<h2>Update Teacher</h2>
-<form method="POST" action="/Teacher/Edit/@Model.TeacherId">
+<div id="containershow">
+    <nav>
+        @*<a class="navlink" href="/Teacher/List">Back To Teachers</a>*@
+        <a class="navlink" href="/Teacher/Show/@Model.TeacherId">Back to The Teacher</a>
+    </nav>
+    <h2>Update Teacher</h2>
+    @{
+
+    }
     <div>
         <label for="TeacherFname">First Name:</label>
         <input type="text" id="TeacherFname" name="TeacherFname" value="@Model.TeacherFName" required="required" />
@@ -26,8 +30,10 @@
         <label for="TeacherSalary">Salary:</label>
         <input type="number" step="0.01" id="TeacherSalary" name="TeacherSalary" value="@Model.Salary" required="required" />
     </div>
-    <div>
-        <input type="submit" value="Update Teacher" />
-    </div>
-</form>
+    @{
+        //updateTeacher() is a JS method defined in /Scripts/teachers.js
+    }
+    <button onclick="updateTeacher(@Model.TeacherId);">Update Teacher</button>
+
+</div>
 
